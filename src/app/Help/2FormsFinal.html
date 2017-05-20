@@ -1,0 +1,72 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-5">
+      <h3> <strong>ReactiveFormsModule</strong> </h3>
+      <br>
+      <h4> User Details </h4>
+      <form novalidate [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+        <div class="form-group">
+          <label>first name</label>
+          <input formControlName="first" class="form-control" required>
+          <div class="alert-danger" *ngIf="myForm.get('first').hasError('required') && myForm.get('first').touched">
+            plz provide a first name
+          </div>
+          <label>last name</label>
+          <input formControlName="last" class="form-control">
+          <div class="form-group" formGroupName="account">
+            <h4> Account </h4>
+            <label>user name</label>
+            <input formControlName="user" class="form-control">
+            <label>pswd</label>
+            <input formControlName="pswd" class="form-control">
+            <label>confirm</label>
+            <input formControlName="confirm" class="form-control">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="myForm.invalid" >Submit</button>
+      </form>
+      <br>
+      <pre>
+        Form: {{ myForm.value | json }}
+        Form valid: {{ myForm.valid | json }}
+        pswd valid: {{ myForm.get('account.pswd').valid | json }}
+        account valid: {{ myForm.get('account').errors | json }}
+        
+      </pre>
+    </div>
+
+    <div class="col-sm-2">
+    </div>
+    <div class="col-sm-5">
+      <h3> <strong>FormsModule</strong> </h3>
+      <br>
+      <h4> User Details </h4>
+      <form novalidate #myTemplateForm="ngForm">
+        <div class="form-group">
+          <label>first name</label>
+          <input [ngModel]="templateFirstName" name="first" class="form-control" required>
+          <label>last name</label>
+          <input ngModel name="last" class="form-control">
+          <div class="form-group" ngModelGroup="account">
+            <h4> Account </h4>
+            <label>user name</label>
+            <input ngModel name="user" class="form-control">
+            <label>pswd</label>
+            <input ngModel name="pswd" class="form-control" required #password="ngModel">
+            <label>confirm</label>
+            <input ngModel name="confirm" class="form-control" required>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+      <br>
+      <pre>
+        Form {{ myTemplateForm.value | json }}
+        Form valid: {{ myTemplateForm.control.valid | json }}
+        Pswd valid: {{ password.control.valid | json }}
+        
+      </pre>
+    </div>
+  </div>
+</div>
